@@ -4,7 +4,7 @@ namespace App\Services\WeatherAPI;
 
 use Illuminate\Support\Facades\Http;
 
-class WeatherBit
+class WeatherBit implements WeatherAPIContract
 {
     protected $result;
 
