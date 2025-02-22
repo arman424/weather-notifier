@@ -4,7 +4,7 @@ namespace App\Actions;
 
 use App\Models\UserLocation;
 
-class GetCityListAction
+class GetUserLocationAction
 {
     public function __invoke()
     {

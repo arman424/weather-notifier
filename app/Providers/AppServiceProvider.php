@@ -2,6 +2,11 @@
 
 namespace App\Providers;
 
+use App\Contracts\WeatherAlertSpecification;
+use App\Contracts\WeatherAPIContract;
+use App\Services\WeatherAPI\WeatherBitAPI\WeatherAlertSpecification\HighPrecipitationSpecification;
+use App\Services\WeatherAPI\WeatherBitAPI\WeatherAlertSpecification\HighUVSpecification;
+use App\Services\WeatherAPI\WeatherBitAPI\WeatherBit;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -11,7 +16,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(WeatherAPIContract::class, WeatherBit::class);
+
+        $this->app->bind(WeatherAlertSpecification::class, HighPrecipitationSpecification::class);
+        $this->app->bind(WeatherAlertSpecification::class, HighUVSpecification::class);
+
+        $this->app->tag([HighPrecipitationSpecification::class, HighUVSpecification::class], 'weather_alert_specifications');
     }
 
     /**

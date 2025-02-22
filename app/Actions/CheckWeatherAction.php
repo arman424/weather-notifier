@@ -2,18 +2,19 @@
 
 namespace App\Actions;
 
-use App\Services\WeatherAPI\WeatherAPIContract;
+use App\Contracts\WeatherAPIContract;
+use App\DTO\WeatherBitDTO;
 
 class CheckWeatherAction
 {
     public function __construct(
-        private WeatherAPIContract $weatherAPI
+        private WeatherAPIContract $weatherAPI,
     ) {
     }
 
-    public function __invoke()
+    public function __invoke(WeatherBitDTO $weatherBitDTO)
     {
         //TODO more weather APIs can be used in the future
-        $this->weatherAPI->getWeather();
+        return $this->weatherAPI->getWeather($weatherBitDTO);
     }
 }

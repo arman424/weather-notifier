@@ -3,8 +3,6 @@
 namespace App\Console\Commands;
 
 use App\Actions\SendWeatherAlertAction;
-use App\Models\WeatherAlert;
-use App\Notifications\WeatherNotification;
 use Illuminate\Console\Command;
 
 class SendWeatherAlert extends Command

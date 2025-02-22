@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\WeatherAPI\WeatherBitAPI;
+namespace App\Contracts;
 
 interface WeatherAlertSpecification
 {

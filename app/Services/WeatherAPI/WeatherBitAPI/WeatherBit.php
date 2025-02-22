@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Services\WeatherAPI;
+namespace App\Services\WeatherAPI\WeatherBitAPI;
 
+use App\Contracts\WeatherAPIContract;
 use App\DTO\WeatherBitDTO;
 use Exception;
 use Illuminate\Support\Facades\Http;

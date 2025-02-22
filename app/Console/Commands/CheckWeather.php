@@ -3,6 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Actions\CheckWeatherAction;
+use App\Actions\CreateWeatherAlertAction;
+use App\Actions\GetUserLocationAction;
+use App\DTO\WeatherBitDTO;
 use Illuminate\Console\Command;
 
 class CheckWeather extends Command
@@ -24,8 +27,18 @@ class CheckWeather extends Command
     /**
      * Execute the console command.
      */
-    public function handle(CheckWeatherAction $checkWeatherAction): void
+    public function handle(
+        GetUserLocationAction $getUserLocationAction,
+        WeatherBitDTO $weatherBitDTO,
+        CheckWeatherAction $checkWeatherAction,
+        CreateWeatherAlertAction $createWeatherAlertAction,
+    ): void
     {
-        $checkWeatherAction();
+        $userLocations = $getUserLocationAction();
+
+        foreach ($userLocations as $city => $users) {
+            $weatherData = $checkWeatherAction($weatherBitDTO->setParam('city', $city));
+            $createWeatherAlertAction($weatherData, $users);
+        }
     }
 }

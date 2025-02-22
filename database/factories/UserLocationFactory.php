@@ -21,6 +21,7 @@ class UserLocationFactory extends Factory
             'user_id' => User::factory(),
             'latitude' => $this->faker->latitude(-90),
             'longitude' => $this->faker->longitude(-180),
+            'city' => $this->faker->city(),
         ];
     }
 }

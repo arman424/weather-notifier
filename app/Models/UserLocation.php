@@ -10,7 +10,7 @@ class UserLocation extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'latitude', 'longitude'];
+    protected $fillable = ['user_id', 'latitude', 'longitude', 'city'];
 
     public function user(): BelongsTo
     {

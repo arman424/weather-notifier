@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\WeatherAPI;
+namespace App\Contracts;
 
 use App\DTO\WeatherBitDTO;
 
