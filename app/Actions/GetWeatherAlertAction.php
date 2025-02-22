@@ -5,7 +5,7 @@ namespace App\Actions;
 use App\Models\WeatherAlert;
 use Illuminate\Support\Collection;
 
-final class GetWeatherAlertsActions
+final class GetWeatherAlertAction
 {
     public function __invoke(): Collection
     {

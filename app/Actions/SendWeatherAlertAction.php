@@ -2,25 +2,20 @@
 
 namespace App\Actions;
 
-use App\Services\WeatherAPI\WeatherNotificationService;
-use Illuminate\Support\Collection;
+use App\Models\User;
+use App\Notifications\WeatherNotification;
+use Exception;
+use Illuminate\Support\Facades\Log;
 
 final class SendWeatherAlertAction
 {
-    public function __construct(
-        private WeatherNotificationService $weatherNotificationService,
-        private UpdateWeatherAlertAction $updateWeatherAlertAction,
-    ) {
-    }
-
-    public function __invoke(Collection $alerts): void
+    public function __invoke(User $user, array $alertData): void
     {
-        foreach ($alerts as $userAlerts) {
-            $user = $userAlerts->first()->user;
-            $alertData = $userAlerts->flatMap(fn($alert) => $alert->alert_data)->toArray();
-
-            $this->weatherNotificationService->send($user, $alertData);
-            ($this->updateWeatherAlertAction)($userAlerts->pluck('id'));
+        try {
+            $user->notify(new WeatherNotification($alertData));
+        } catch (Exception $e) {
+            //TODO a generic logger service can be created
+            Log::error("Failed to notify user {$user->id}: " . $e->getMessage());
         }
     }
 }

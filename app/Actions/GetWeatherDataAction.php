@@ -5,7 +5,7 @@ namespace App\Actions;
 use App\Contracts\WeatherAPIContract;
 use App\DTO\WeatherBitDTO;
 
-final class CheckWeatherAction
+final class GetWeatherDataAction
 {
     public function __construct(
         private WeatherAPIContract $weatherAPI,

@@ -2,7 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Actions\CheckWeatherAction;
+use App\Actions\GetWeatherDataAction;
+use App\Actions\GetWeatherAlertSpecificationAction;
 use App\Actions\CreateWeatherAlertAction;
 use App\Actions\GetUserLocationAction;
 use App\DTO\WeatherBitDTO;
@@ -30,15 +31,17 @@ class CheckWeather extends Command
     public function handle(
         GetUserLocationAction $getUserLocationAction,
         WeatherBitDTO $weatherBitDTO,
-        CheckWeatherAction $checkWeatherAction,
+        GetWeatherDataAction $getWeatherDataAction,
+        GetWeatherAlertSpecificationAction $getWeatherAlertSpecificationAction,
         CreateWeatherAlertAction $createWeatherAlertAction,
     ): void
     {
         $userLocations = $getUserLocationAction();
 
         foreach ($userLocations as $city => $users) {
-            $weatherData = $checkWeatherAction($weatherBitDTO->setParam('city', $city));
-            $createWeatherAlertAction($weatherData, $users);
+            $weatherData = $getWeatherDataAction($weatherBitDTO->setParam('city', $city));
+            $alertsToInsert = $getWeatherAlertSpecificationAction($weatherData, $users);
+            $createWeatherAlertAction($alertsToInsert);
         }
     }
 }

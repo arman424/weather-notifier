@@ -2,7 +2,7 @@
 
 namespace Actions;
 
-use App\Actions\CheckWeatherAction;
+use App\Actions\GetWeatherDataAction;
 use App\Contracts\WeatherAPIContract;
 use App\DTO\WeatherBitDTO;
 use Tests\TestCase;
@@ -19,7 +19,7 @@ class CheckWeatherActionTest extends TestCase
                 'uv' => 5,
             ]);
 
-        $action = new CheckWeatherAction($mockWeatherAPI);
+        $action = new GetWeatherDataAction($mockWeatherAPI);
         $dto = new WeatherBitDTO();
         $dto->setParam('city', 'Yerevan');
 
