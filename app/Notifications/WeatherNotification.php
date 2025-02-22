@@ -27,14 +27,8 @@ class WeatherNotification extends Notification implements ShouldQueue
      */
     public function via(object $notifiable): array
     {
-        $channels = ['mail'];
-
         //TODO more channels can be added
-        if (!empty($notifiable->slack_webhook_url)) {
-            $channels[] = 'slack';
-        }
-
-        return $channels;
+        return ['mail', 'slack'];
     }
 
     /**
