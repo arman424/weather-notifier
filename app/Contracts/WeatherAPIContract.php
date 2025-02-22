@@ -6,5 +6,5 @@ use App\DTO\WeatherBitDTO;
 
 interface WeatherAPIContract
 {
-    public function getWeather(WeatherBitDTO $weatherBitDTO);
+    public function getWeather(WeatherBitDTO $weatherBitDTO): array;
 }

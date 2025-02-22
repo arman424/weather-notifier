@@ -4,16 +4,27 @@ namespace App\Actions;
 
 use App\Models\WeatherAlert;
 use App\Notifications\WeatherNotification;
+use Exception;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 
 class SendWeatherAlertAction
 {
-    public function __invoke()
+    public function __invoke(Collection $alerts): void
     {
-        $alerts = WeatherAlert::whereNull('notified_at')->get();
+        foreach ($alerts as $userId => $userAlerts) {
+            $user = $userAlerts->first()->user;
+            $alertData = $userAlerts->flatMap(fn($alert) => $alert->alert_data)->toArray();
 
-        foreach ($alerts as $alert) {
-            $alert->user->notify(new WeatherNotification($alert->alert_data));
-            $alert->update(['notified_at' => now()]);
+            try {
+                $user->notify(new WeatherNotification($alertData));
+
+                WeatherAlert::whereIn('id', $userAlerts->pluck('id'))
+                    ->update(['notified_at' => now()]);
+
+            } catch (Exception $e) {
+                Log::error("Failed to notify user {$userId}: " . $e->getMessage());
+            }
         }
     }
 }

@@ -10,6 +10,6 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-Schedule::job(new CheckWeatherJob())->everySecond();
-Schedule::job(new SendWeatherAlertsJob())->everySecond();
+Schedule::job(new CheckWeatherJob())->everyThirtyMinutes();
+Schedule::job(new SendWeatherAlertsJob())->everyThirtyMinutes();
 

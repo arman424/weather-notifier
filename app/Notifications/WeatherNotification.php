@@ -26,7 +26,14 @@ class WeatherNotification extends Notification implements ShouldQueue
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        $channels = ['mail'];
+
+        //TODO more channels can be added
+        if (!empty($notifiable->slack_webhook_url)) {
+            $channels[] = 'slack';
+        }
+
+        return $channels;
     }
 
     /**
@@ -34,12 +41,20 @@ class WeatherNotification extends Notification implements ShouldQueue
      */
     public function toMail(object $notifiable): MailMessage
     {
-        return (new MailMessage)
+        $mail = (new MailMessage)
             ->subject('Weather Alert')
-            ->line('Severe weather conditions detected in your city.')
-            ->line('Precipitation: ' . $this->data['precip'])
-            ->line('UV Index: ' . $this->data['uv_index'])
-            ->line('Stay safe!');
+            ->line('Severe weather conditions detected in your city.');
+
+        foreach ($this->data as $key => $value) {
+            $mail->line(ucwords(str_replace('_', ' ', $key)) . ': ' . $value);
+        }
+
+        return $mail->line('Stay safe!');
+    }
+
+    public function toSlack(object $notifiable)
+    {
+        //TODO create a SlackMessage
     }
 
     /**

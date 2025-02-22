@@ -16,4 +16,9 @@ class HighUVSpecification implements WeatherAlertSpecification
     {
         return WeatherAlertEnum::HIGH_UV->value;
     }
+
+    public function getAlertData(array $weatherData): array
+    {
+        return ['uv' => $weatherData['uv'] ?? null];
+    }
 }

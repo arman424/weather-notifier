@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Actions\GetWeatherAlertsActions;
 use App\Actions\SendWeatherAlertAction;
 use Illuminate\Console\Command;
 
@@ -24,8 +25,11 @@ class SendWeatherAlert extends Command
     /**
      * Execute the console command.
      */
-    public function handle(SendWeatherAlertAction $sendWeatherAlertAction): void
+    public function handle(
+        GetWeatherAlertsActions $getWeatherAlertsActions,
+        SendWeatherAlertAction $sendWeatherAlertAction,
+    ): void
     {
-        $sendWeatherAlertAction();
+        $sendWeatherAlertAction($getWeatherAlertsActions());
     }
 }

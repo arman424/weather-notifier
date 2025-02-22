@@ -16,4 +16,9 @@ class HighPrecipitationSpecification implements WeatherAlertSpecification
     {
         return WeatherAlertEnum::HIGH_PRECIPITATION->value;
     }
+
+    public function getAlertData(array $weatherData): array
+    {
+        return ['precip' => $weatherData['precip'] ?? null];
+    }
 }
