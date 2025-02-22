@@ -25,7 +25,9 @@ class CreateWeatherAlertAction
                     'user_id' => $user->user_id,
                     'alert_type' => $alertType,
                     'alert_data' => json_encode($alertData),
-                    'notified' => false,
+                    //TODO null value isn't working for insertOrIgnore,
+                    // consider changing the value as it's not a valid timestamp in strict SQL modes.
+                    'notified_at' => 0,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];

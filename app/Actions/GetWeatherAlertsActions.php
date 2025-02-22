@@ -9,7 +9,7 @@ final class GetWeatherAlertsActions
 {
     public function __invoke(): Collection
     {
-        return WeatherAlert::whereNull('notified_at')
+        return WeatherAlert::where('notified_at', '0000-00-00 00:00:00')
                 ->with('user:id,email')
                 ->get()
                 ->groupBy('user_id');

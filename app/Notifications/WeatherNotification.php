@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Log;
 
 class WeatherNotification extends Notification implements ShouldQueue
 {
@@ -14,9 +15,9 @@ class WeatherNotification extends Notification implements ShouldQueue
     /**
      * Create a new notification instance.
      */
-    public function __construct(array $alertData)
-    {
-        $this->data = $alertData;
+    public function __construct(
+        private readonly array $alertData
+    ) {
     }
 
     /**
@@ -45,8 +46,8 @@ class WeatherNotification extends Notification implements ShouldQueue
             ->subject('Weather Alert')
             ->line('Severe weather conditions detected in your city.');
 
-        foreach ($this->data as $key => $value) {
-            $mail->line(ucwords(str_replace('_', ' ', $key)) . ': ' . $value);
+        foreach ($this->alertData as $key => $value) {
+            $mail->line(ucwords($key) . ': ' . $value);
         }
 
         return $mail->line('Stay safe!');
