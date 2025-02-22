@@ -28,6 +28,7 @@ class CreateWeatherAlertAction
                     //TODO null value isn't working for insertOrIgnore,
                     // consider changing the value as it's not a valid timestamp in strict SQL modes.
                     'notified_at' => 0,
+                    'notified' => false,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];

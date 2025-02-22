@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('weather_alerts', function (Blueprint $table) {
-            $table->unique(['user_id', 'alert_type', 'notified_at'], 'unique_user_alert');
+            $table->unique(['user_id', 'alert_type', 'notified', 'notified_at'], 'unique_user_alert');
         });
     }
 

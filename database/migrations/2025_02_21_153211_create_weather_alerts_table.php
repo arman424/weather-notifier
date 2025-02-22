@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->enum('alert_type', array_column(WeatherAlertEnum::cases(), 'value'));
             $table->json('alert_data');
+            $table->boolean('notified')->default(false);
             $table->timestamp('notified_at')->nullable();
             $table->timestamps();
         });

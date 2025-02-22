@@ -20,7 +20,10 @@ class SendWeatherAlertAction
                 $user->notify(new WeatherNotification($alertData));
 
                 WeatherAlert::whereIn('id', $userAlerts->pluck('id'))
-                    ->update(['notified_at' => now()]);
+                    ->update([
+                        'notified' => true,
+                        'notified_at' => now(),
+                    ]);
 
             } catch (Exception $e) {
                 Log::error("Failed to notify user {$userId}: " . $e->getMessage());
