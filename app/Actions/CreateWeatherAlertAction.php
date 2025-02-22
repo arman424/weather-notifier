@@ -24,8 +24,10 @@ class CreateWeatherAlertAction
                 $alertsToInsert[] = [
                     'user_id' => $user->user_id,
                     'alert_type' => $alertType,
-                    'alert_data' => $alertData,
-                    'notified_at' => null,
+                    'alert_data' => json_encode($alertData),
+                    'notified' => false,
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ];
             }
         }

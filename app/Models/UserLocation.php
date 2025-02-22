@@ -12,6 +12,8 @@ class UserLocation extends Model
 
     protected $fillable = ['user_id', 'latitude', 'longitude', 'city'];
 
+    public $timestamps = true;
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

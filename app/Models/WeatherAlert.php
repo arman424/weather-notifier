@@ -10,10 +10,12 @@ class WeatherAlert extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'city', 'alert_type', 'alert_data', 'notified_at'];
+    protected $fillable = ['user_id', 'city', 'alert_type', 'alert_data', 'notified', 'notified_at'];
+
+    public $timestamps = true;
 
     protected $casts = [
-        'alert_data' => 'array',
+        'alert_data' => 'json',
     ];
 
     public function user(): BelongsTo
