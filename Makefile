@@ -1,9 +1,9 @@
 # Laravel Project Makefile
 
-.PHONY: setup build up down restart install key migrate seed optimize permissions env logs test
+.PHONY: setup build up down restart install key migrate seed permissions env logs test
 
 # Setup the entire project
-setup: env build up install key migrate seed permissions optimize
+setup: env build up install key migrate seed permissions
 
 # Build Docker containers
 build:
@@ -35,10 +35,6 @@ migrate:
 # Seed the database
 seed:
 	docker exec php php artisan db:seed --force
-
-# Clear and cache configurations
-optimize:
-	docker exec php php artisan optimize
 
 # Set proper permissions
 permissions:
