@@ -21,6 +21,17 @@ Sign up at [Weatherbit](https://www.weatherbit.io/) and obtain an API key. Then,
 WEATHERBIT_KEY=your_api_key_here
 ```
 
+### Testing Weather Alerts
+
+If you want to test weather alerts, you should modify the threshold values in the `config/weather.php` file. Change the parameters as follows to ensure that the system always detects high precipitation and UV index, triggering notifications:
+
+```php
+return [
+    'max_precipitation' => -10, // mm
+    'max_uv_index' => -10
+];
+```
+
 ## ⚡ Usage
 
 ### Fetch and Store Weather Data
