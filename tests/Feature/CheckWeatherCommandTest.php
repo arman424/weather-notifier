@@ -9,11 +9,20 @@ use App\Models\UserLocation;
 use App\Models\WeatherAlert;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Config;
 use Tests\TestCase;
 
 class CheckWeatherCommandTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Config::set('weather.max_precipitation', 10);
+        Config::set('weather.max_uv_index', 8);
+    }
 
     public function test_creates_weather_alerts_for_users()
     {

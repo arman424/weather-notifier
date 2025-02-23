@@ -7,7 +7,7 @@ use App\Services\WeatherAPI\WeatherBitAPI\WeatherBit;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
-class WeatherBitTest extends TestCase
+class WeatherAPIServiceTest extends TestCase
 {
     /**
      * @throws \Exception

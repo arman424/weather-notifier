@@ -2,7 +2,7 @@
 
 namespace Actions;
 
-use App\Actions\GetWeatherAlertAction;
+use App\Actions\GetWeatherAlertPerUserAction;
 use App\Models\User;
 use App\Models\WeatherAlert;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -38,7 +38,7 @@ class GetWeatherAlertsActionsTest extends TestCase
             'notified_at' => now()->setTimestamp(0)->toDateTimeString(),
         ]);
 
-        $action = new GetWeatherAlertAction();
+        $action = new GetWeatherAlertPerUserAction();
         $result = $action();
 
         $this->assertCount(2, $result);

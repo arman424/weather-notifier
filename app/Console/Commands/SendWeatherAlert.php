@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Actions\GetWeatherAlertAction;
+use App\Actions\GetWeatherAlertPerUserAction;
 use App\Actions\SendWeatherAlertAction;
 use App\Actions\UpdateWeatherAlertNotifiedAction;
 use Illuminate\Console\Command;
@@ -27,12 +27,12 @@ class SendWeatherAlert extends Command
      * Execute the console command.
      */
     public function handle(
-        GetWeatherAlertAction $getWeatherAlertAction,
+        GetWeatherAlertPerUserAction $getWeatherAlertPerUserAction,
         SendWeatherAlertAction $sendWeatherAlertAction,
         UpdateWeatherAlertNotifiedAction $updateWeatherAlertNotifiedAction,
     ): void
     {
-        $alerts = $getWeatherAlertAction();
+        $alerts = $getWeatherAlertPerUserAction();
 
         foreach ($alerts as $userAlerts) {
             $user = $userAlerts->first()->user;
