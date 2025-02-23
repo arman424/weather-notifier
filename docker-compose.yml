@@ -30,10 +30,10 @@ services:
         image: mysql:8.0
         container_name: mysql
         environment:
-            MYSQL_ROOT_PASSWORD: root
+            MYSQL_ROOT_PASSWORD: secret-password
             MYSQL_DATABASE: myapp
-            MYSQL_USER: root
-            MYSQL_PASSWORD: root
+            MYSQL_USER: myuser
+            MYSQL_PASSWORD: mypassword
         volumes:
             - db_data:/var/lib/mysql
         ports:
@@ -45,8 +45,9 @@ services:
         logging:
             driver: 'none'
         ports:
-            - "1025:1025" # smtp server
+            - "1025:1025" # SMTP server
             - "8025:8025"
+
 volumes:
     db_data:
 
