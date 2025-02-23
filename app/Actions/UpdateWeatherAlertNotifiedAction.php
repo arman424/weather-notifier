@@ -3,11 +3,10 @@
 namespace App\Actions;
 
 use App\Models\WeatherAlert;
-use Illuminate\Support\Collection;
 
 final class UpdateWeatherAlertNotifiedAction
 {
-    public function __invoke(Collection $alertIds): void
+    public function __invoke(array $alertIds): void
     {
         WeatherAlert::whereIn('id', $alertIds)
             ->update([

@@ -29,17 +29,13 @@ class SendWeatherAlert extends Command
     public function handle(
         GetWeatherAlertPerUserAction $getWeatherAlertPerUserAction,
         SendWeatherAlertAction $sendWeatherAlertAction,
-        UpdateWeatherAlertNotifiedAction $updateWeatherAlertNotifiedAction,
     ): void
     {
         $alerts = $getWeatherAlertPerUserAction();
 
         foreach ($alerts as $userAlerts) {
             $user = $userAlerts->first()->user;
-            $alertData = $userAlerts->flatMap(fn($alert) => $alert->alert_data)->toArray();
-
-            $sendWeatherAlertAction($user, $alertData);
-            $updateWeatherAlertNotifiedAction($userAlerts->pluck('id'));
+            $sendWeatherAlertAction($user, $userAlerts);
         }
     }
 }

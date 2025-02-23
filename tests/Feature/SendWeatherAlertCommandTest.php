@@ -1,10 +1,13 @@
 <?php
 
+use App\Listeners\UpdateWeatherAlertNotifiedListener;
 use App\Models\User;
 use App\Models\WeatherAlert;
 use App\Notifications\WeatherNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Notifications\Events\NotificationSent;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
@@ -16,10 +19,11 @@ class SendWeatherAlertCommandTest extends TestCase
     public function test_sends_weather_alerts_and_updates_database()
     {
         Notification::fake();
+        Event::fake();
 
         $user = User::factory()->create();
 
-        $alerts = WeatherAlert::factory()->create([
+        $alert = WeatherAlert::factory()->create([
             'user_id' => $user->id,
             'notified' => false,
             'notified_at' => now()->setTimestamp(0)->toDateTimeString(),
@@ -31,8 +35,17 @@ class SendWeatherAlertCommandTest extends TestCase
             return in_array('mail', $channels) && in_array('slack', $channels);
         });
 
+        $notification = new WeatherNotification(
+            alertData: [$alert->alert_data],
+            alertIds: [$alert->id]
+        );
+
+        $event = new NotificationSent($user, $notification, 'mail');
+        $listener = app(UpdateWeatherAlertNotifiedListener::class);
+        $listener->handle($event);
+
         $this->assertDatabaseHas('weather_alerts', [
-            'id' => $alerts->first()->id,
+            'id' => $alert->id,
             'notified' => true,
         ]);
     }

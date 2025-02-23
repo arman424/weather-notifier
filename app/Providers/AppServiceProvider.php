@@ -4,9 +4,12 @@ namespace App\Providers;
 
 use App\Contracts\WeatherAlertSpecification;
 use App\Contracts\WeatherAPIContract;
+use App\Listeners\UpdateWeatherAlertNotifiedListener;
 use App\Services\WeatherAPI\WeatherBitAPI\WeatherAlertSpecification\HighPrecipitationSpecification;
 use App\Services\WeatherAPI\WeatherBitAPI\WeatherAlertSpecification\HighUVSpecification;
 use App\Services\WeatherAPI\WeatherBitAPI\WeatherBit;
+use Illuminate\Notifications\Events\NotificationSent;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -29,6 +32,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Event::listen(
+            NotificationSent::class,
+            UpdateWeatherAlertNotifiedListener::class,
+        );
     }
 }

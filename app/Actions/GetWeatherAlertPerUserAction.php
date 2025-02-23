@@ -11,7 +11,7 @@ final class GetWeatherAlertPerUserAction
     {
         return WeatherAlert::where('notified', false)
             ->with('user:id,email')
-            ->get()
+            ->get(['id', 'user_id', 'alert_data'])
             ->groupBy('user_id');
     }
 }
